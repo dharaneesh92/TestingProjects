@@ -42,7 +42,7 @@ public class ReturnCalcPageActions {
 	    int revenue=Integer.parseInt(element.getWebElement("XPATH", ReturnCalcPageElements.sliderInputValue).getAttribute("value"));
 	    System.out.println("Slider Value: "+revenue);
 	    Assert.assertTrue(revenue==targetValue,"Slider Value is Mismatching");
-	    
+		 
 	}
 	
 	public void textUpdateSlider(int value) throws InterruptedException {
@@ -51,10 +51,13 @@ public class ReturnCalcPageActions {
 		js.executeScript("arguments[0].scrollIntoView({ behavior: 'auto', block: 'center' });", element.getWebElement("XPATH",ReturnCalcPageElements.sliderElement));
 		wait.until(ExpectedConditions.elementToBeClickable(element.getWebElement("XPATH", ReturnCalcPageElements.sliderInputValue)));
 		element.getWebElement("XPATH", ReturnCalcPageElements.sliderInputValue).clear();
+		element.getWebElement("XPATH", ReturnCalcPageElements.sliderInputValue).click();
    		js.executeScript("arguments[0].value = arguments[1];", element.getWebElement("XPATH", ReturnCalcPageElements.sliderInputValue),value);
-	    js.executeScript("arguments[0].dispatchEvent(new Event('change'));", element.getWebElement("XPATH", ReturnCalcPageElements.sliderInputValue));
+	    //js.executeScript("arguments[0].dispatchEvent(new Event('change'));", element.getWebElement("XPATH", ReturnCalcPageElements.sliderInputValue));
+   		element.getWebElement("XPATH", ReturnCalcPageElements.sliderInputValue).sendKeys(Keys.ARROW_UP);
+   		element.getWebElement("XPATH", ReturnCalcPageElements.sliderElement).sendKeys(Keys.ARROW_LEFT);
 		wait.until(ExpectedConditions.attributeToBe(element.getWebElement("XPATH", ReturnCalcPageElements.sliderInputValue), "value", String.valueOf(value)));
-		int sliderValue=Integer.parseInt(element.getWebElement("XPATH", ReturnCalcPageElements.sliderInputValue).getAttribute("value"));
+		int sliderValue=Integer.parseInt(element.getWebElement("XPATH", ReturnCalcPageElements.sliderElement).getAttribute("value"));
 		System.out.println("sliderValue Updated: "+sliderValue);
 		Assert.assertTrue(sliderValue==value, "Slider is defective");
 		
